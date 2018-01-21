@@ -1,0 +1,122 @@
+(edif mutex2
+  (edifversion 2 0 0)
+  (edifLevel 0)
+  (keywordmap (keywordlevel 0))
+(status
+ (written
+  (timeStamp 2018 01 21 17 21 35)
+  (program "Vivado" (version "2017.3"))
+  (comment "Built on 'Wed Oct  4 19:58:07 MDT 2017'")
+  (comment "Built by 'xbuild'")
+ )
+)
+  (Library hdi_primitives
+    (edifLevel 0)
+    (technology (numberDefinition ))
+   (cell LUT2 (celltype GENERIC)
+     (view netlist (viewtype NETLIST)
+       (interface 
+        (port O (direction OUTPUT))
+        (port I0 (direction INPUT))
+        (port I1 (direction INPUT))
+       )
+     )
+   )
+   (cell INV (celltype GENERIC)
+     (view netlist (viewtype NETLIST)
+       (interface
+         (port I (direction INPUT))
+         (port O (direction OUTPUT))
+       )
+     )
+   )
+  )
+  (Library work
+    (edifLevel 0)
+    (technology (numberDefinition ))
+   (cell mutex2 (celltype GENERIC)
+     (view mutex2 (viewtype NETLIST)
+       (interface 
+        (port grant0 (direction OUTPUT)
+           (property dont_touch (string "yes"))
+        )
+        (port grant1 (direction OUTPUT)
+           (property dont_touch (string "yes"))
+        )
+        (port req0 (direction INPUT)
+           (property dont_touch (string "yes"))
+        )
+        (port req1 (direction INPUT)
+           (property dont_touch (string "yes"))
+        )
+       )
+       (contents
+         (instance grant0_inferred_i_1 (viewref netlist (cellref LUT2 (libraryref hdi_primitives)))
+           (property INIT (string "4'h2"))
+         )
+         (instance grant1_inferred_i_1 (viewref netlist (cellref LUT2 (libraryref hdi_primitives)))
+           (property INIT (string "4'h2"))
+         )
+         (instance mid0_inferred_i_1 (viewref netlist (cellref LUT2 (libraryref hdi_primitives)))
+           (property INIT (string "4'h7"))
+         )
+         (instance mid1_inferred_i_1 (viewref netlist (cellref LUT2 (libraryref hdi_primitives)))
+           (property INIT (string "4'h7"))
+         )
+         (net grant0 (joined
+          (portref O (instanceref grant0_inferred_i_1))
+          (portref grant0)
+          )
+
+           (property DONT_TOUCH (boolean (true)))
+         )
+         (net grant1 (joined
+          (portref O (instanceref grant1_inferred_i_1))
+          (portref grant1)
+          )
+
+           (property DONT_TOUCH (boolean (true)))
+         )
+         (net mid0 (joined
+          (portref I0 (instanceref grant1_inferred_i_1))
+          (portref I0 (instanceref mid1_inferred_i_1))
+          (portref I1 (instanceref grant0_inferred_i_1))
+          (portref O (instanceref mid0_inferred_i_1))
+          )
+
+           (property DONT_TOUCH (boolean (true)))
+         )
+         (net mid1 (joined
+          (portref I0 (instanceref grant0_inferred_i_1))
+          (portref I0 (instanceref mid0_inferred_i_1))
+          (portref I1 (instanceref grant1_inferred_i_1))
+          (portref O (instanceref mid1_inferred_i_1))
+          )
+
+           (property DONT_TOUCH (boolean (true)))
+         )
+         (net req0 (joined
+          (portref I1 (instanceref mid0_inferred_i_1))
+          (portref req0)
+          )
+
+           (property DONT_TOUCH (boolean (true)))
+         )
+         (net req1 (joined
+          (portref I1 (instanceref mid1_inferred_i_1))
+          (portref req1)
+          )
+
+           (property DONT_TOUCH (boolean (true)))
+         )
+       )
+     )
+   )
+  )
+(comment "Reference To The Cell Of Highest Level")
+
+  (design mutex2
+    (cellref mutex2 (libraryref work))
+    (property part (string "xc7vx485tffg1761-1"))
+  )
+)
